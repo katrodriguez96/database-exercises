@@ -1,3 +1,4 @@
+# set up database and tables
 CREATE DATABASE join_test_db;
 USE join_test_db;
 
@@ -35,12 +36,26 @@ VALUES ('bob', 'bob@example.com', 1),
        ('jane', 'jane@example.com', null),
        ('mike', 'mike@example.com', null);
 
+# exercise start
 INSERT INTO users (name, email, role_id)
 VALUES ('kat', 'kat@example.com', 2),
        ('jesus', 'jesus@example.com', 2),
        ('cody', 'cody@example.com', 2),
        ('hazel', 'hazel@example.com', null);
-
+# join
 SELECT users.name as user_name, roles.name as role_name
 FROM users
          JOIN roles ON users.role_id = roles.id;
+# left join
+SELECT users.name AS user_name, roles.name AS role_name
+FROM users
+         LEFT JOIN roles ON users.role_id = roles.id;
+# right join
+SELECT users.name AS user_name, roles.name AS role_name
+FROM users
+         RIGHT JOIN roles ON users.role_id = roles.id;
+# count, group by, join
+SELECT roles.name AS role_name, COUNT(users.name) AS num_of_users
+FROM roles
+         JOIN users ON users.role_id = roles.id
+GROUP BY users.role_id;
